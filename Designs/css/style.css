@@ -116,7 +116,7 @@ form {
     cursor: pointer;
 }
 
-.miscellaneous {
+.friends {
     float: left;
     width:20%;
     padding: 10px;
@@ -124,3 +124,75 @@ form {
     margin-left: 2%;
 }
 
+.listitems {
+    width: 60%;
+    margin: 0 auto;
+    background-color: #D2CDC8;
+    text-align: center;
+    padding: 10px;
+}
+
+.items {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.items ul {
+    list-style-type: none;
+}
+
+.items ul li {
+    margin: 0;
+    border: 2px solid grey;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+
+@media only screen and (min-width:150px) and (max-width:600px) {
+    
+    .form-input {
+        width: 100%;
+        margin: 0 auto;
+        margin-top: 10%;
+        padding: 10px;
+    }
+    
+    form {
+        margin-top: 0;
+    }
+
+    .logo {
+        width: 100%;
+        display: inline-block;
+    }
+    
+    .logo img {
+        float: left;
+        width: 20%;
+        height:20%;
+    }
+
+    .profile {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 2%;
+    }
+
+    .shoppinglist {
+        width: 100%;
+        padding: 10px;
+        margin:0 auto 2% auto;
+    }
+    
+    .friends {
+        width:100%;
+        padding: 10px;
+        margin:0 auto 2% auto;
+    }
+    
+    .listitems {
+        width: 100%;
+    }
+
+}

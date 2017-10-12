@@ -1,0 +1,61 @@
+body,
+h1,
+h2,
+h3 {
+    font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 700;
+}
+
+.topcontainer {
+    margin-top: 80px;
+}
+
+body,
+html {
+    width: 100%;
+    height: 100%;
+}
+
+a,
+.navbar-default .navbar-brand,
+.navbar-default .navbar-nav>li>a,
+th {
+    color: #53BD9D;
+}
+
+.btn-default {
+    border-color: #53BD9D;
+    color: #53BD9D;
+}
+
+.btn-default:hover {
+    background-color: #53BD9D;
+}
+
+.divider {
+    width: 400px;
+}
+
+.header {
+    text-align: center;
+    color: #53BD9D;
+}
+
+.intro-header {
+    padding-top: 50px;
+    padding-bottom: 50px;
+    text-align: center;
+    color: #53BD9D;
+    background-image: url("images/background.jpg");
+    background-size: cover;
+    height: 100%;
+}
+
+.wrapper {
+    min-height: 100%;
+}
+
+footer {
+    padding: 20px;
+    background-color: #f8f8f8;
+}

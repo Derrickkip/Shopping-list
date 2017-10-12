@@ -4,6 +4,33 @@ Tests for shoppinglist
 
 import unittest
 from shoppinglist import Shoppinglist
+from user import User
+class test_user_registration(unittest.TestCase):
+    '''
+    User can register
+    '''
+
+class UserclassTests(unittest.TestCase):
+    '''
+    Test user can register and login into site
+    '''
+    def setUp(self):
+        self.User = User()
+        self.users_details = [{"derrick":"letmein"}, {"Michael":1234}]
+
+    def test_login(self):
+        auth = self.login(derrick, letmin)
+        self.assertEqual(auth, 'Login successful')
+        leave = self.logout()
+        self.assertEqual(leave, 'You were logged out')
+
+    def test_unknown_user(self):
+        auth = self.login(michael, letmein)
+        self.assertEqual(auth, "The username or password is wrong")
+        wrong_password = self.login("derrick", "python")
+        self.assertEqual(wrong_password, 'The username or password is wrong')
+
+
 
 class ShoppinglistTest(unittest.TestCase):
     '''

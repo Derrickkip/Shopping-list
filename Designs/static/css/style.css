@@ -11,14 +11,7 @@ a {
     box-sizing: border-box;
 }
 
-.form-input {
-    width: 40%;
-    margin: 0 auto;
-    margin-top: 10%;
-    background-color: #f2f2f2;
-    text-align: center;
-    padding: 10px;
-}
+
 
 input[type="text"], input[type="password"], input[type="email"] {
     width: 80%;

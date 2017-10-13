@@ -25,9 +25,9 @@
             </div>
             <div class="collapse navbar-collapse" id="navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="home.html">Home</a></li>
-                    <li><a href="registration.html">Register</a></li>
-                    <li><a href="login.html">Login</a></li>
+                    <li><a href="{{ url_for('home') }}">Home</a></li>
+                    <li><a href="{{ url_for('register') }}">Register</a></li>
+                    <li><a href="{{ url_for('login') }}">Login</a></li>
                 </ul>
             </div>
         </div>
@@ -36,33 +36,33 @@
         <h1 class="header">Sign Up</h1>
         <hr class="divider" />
         <div class="container topcontainer">
-            <form class="form-horizontal" role="form" action="#" method="POST">
+            <form class="form-horizontal" role="form" action="{{url_for('register') }}" method="POST">
                 <div class="form-group">
                     <label class="control-label col-md-4" for="inputemail">Email:</label>
                     <div class="input-group col-md-4">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-                        <input class="form-control" type="email" id="inputemail" name="email" placeholder="Email">
+                        <input class="form-control" type="email" id="inputemail" name="email" placeholder="Email" required>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-md-4" for="inputusername">Username:</label>
                     <div class=" input-group col-md-4">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                        <input class="form-control" type="text" id="inputusername" name="username" placeholder="Username">
+                        <input class="form-control" type="text" id="inputusername" name="username" placeholder="Username" required>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-md-4" for="inputpassword">Password:</label>
                     <div class="input-group col-md-4">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                        <input class="form-control" type="password" id="inputpassword" name="password" placeholder="Password">
+                        <input class="form-control" type="password" id="inputpassword" name="password" placeholder="Password" required>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-md-4" for="confirmpassword">Confirm Password:</label>
                     <div class="input-group col-md-4">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                        <input class="form-control" type="password" id="confirmpassword" name="passwd" placeholder="Confirm Password">
+                        <input class="form-control" type="password" id="confirmpassword" name="passwd" placeholder="Confirm Password" required>
                     </div>
                 </div>
                 <div class="form-group">
@@ -78,11 +78,11 @@
             <div class="row">
                 <div class="col-lg-12">
                     <ul class="list-inline">
-                        <li><a href="home.html">Home</a></li>
+                        <li><a href="{{ url_for('home') }}">Home</a></li>
                         <li class="footer-menu-divider">⋅</li>
-                        <li><a href="#">Register</a></li>
+                        <li><a href="{{ url_for('register') }}">Register</a></li>
                         <li class="footer-menu-divider">⋅</li>
-                        <li><a href="#">Login</a></li>
+                        <li><a href="{{ url_for('login') }}">Login</a></li>
                     </ul>
                     <p class="copyright text-muted small">Copyright © 2017. All Rights Reserved</p>
                 </div>

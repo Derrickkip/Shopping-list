@@ -64,3 +64,23 @@ footer {
     text-align: center;
     background-color: #53BD9D;
 }
+
+.center {
+    text-align: center;
+    margin: auto;
+}
+
+.table {
+    margin: auto;
+    width: 50%;
+}
+
+th,
+td {
+    text-align: center;
+}
+
+th {
+    background-color: #0D7956;
+    color: white;
+}

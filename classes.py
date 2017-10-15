@@ -11,31 +11,61 @@ class User(object):
         self.email = Email
         self.username = Username
         self.password = Password
+        self.shopping_lists = []
 
-    def getid(self):
-        return self.uid
+    def add_list(self, shopping_list):
+        """
+        Add user lists
+        """
+        self.shopping_lists.append(shopping_list)
+
+    def delete_list(self, shopping_list):
+        """
+        Delete user list
+        """
+        self.shopping_lists.remove(shopping_list)
 
     def __repr__(self):
-        return ("%d email is %s username is %s")%(self.uid,self.email,self.username) 
+        return ("<Email: %s> <Username: %s>")%(self.email, self.username)
 
 class ShoppingList(object):
     """
     Shopping list object class declaration
     """
-    def __init__(self, listid, name, description, itemnumber, datecreated, items):
+    def __init__(self, listid, name):
         #unique ID for every shopping list
         self.listid = listid
         self.name = name
-        self.description = description
-        self.itemnumber = itemnumber
-        self.datecreated = datecreated
-        self.items = items
+        self.items = []
+
+    def update_list(self, name2):
+        """
+        Update the shopping list
+        """
+        self.name = name2
+
+    def add_item(self, item):
+        """
+        Add items to shopping list
+        """
+        self.items.append(item)
+
+    def delete_item(self, item):
+        """
+        remove items from list
+        """
+        self.items.remove(item)
 
 class Item(object):
     """
     Shopping list Items Object class declaration
     """
-    def __init__(self, itemid, name, price):
+    def __init__(self, itemid, name):
         self.itemid = itemid
         self.name = name
-        self.price = price
+
+    def update_item(self, name2):
+        """
+        Update item
+        """
+        self.name = name2

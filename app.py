@@ -1,22 +1,34 @@
+"""
+Shopping list flask implementation
+"""
 from flask import Flask, render_template, request, flash, redirect, url_for, session
-from classes import User
+from classes import User, ShoppingList
 
 SECRET_KEY = 'NaughtyNaughty'
 
-app = Flask(__name__, template_folder='Designs', static_folder='Designs/static')
-app.config.from_object(__name__)
+FLASK_APP = Flask(__name__, template_folder='Designs', static_folder='Designs/static')
+FLASK_APP.config.from_object(__name__)
 
-UserList = {}
+USERLIST = {}
+CURRENT_USER = {}
 
+def check_password(password1, password2):
+    """
+    helper function to compare passwords
+    """
+    same = False
+    if password1 == password2:
+        same = True
+    return same
 
-@app.route('/')
+@FLASK_APP.route('/')
 def home():
     """
     Home page view
     """
     return render_template('home.html')
 
-@app.route('/register', methods=['GET', 'POST'])
+@FLASK_APP.route('/register', methods=['GET', 'POST'])
 def register():
     """
     User registration view
@@ -26,57 +38,119 @@ def register():
         username = request.form['username']
         password = request.form['password']
         password2 = request.form['passwd']
-        if UserList == {}:
+        if USERLIST == {}:
             uid = 1
         else:
-            uid = len(UserList.items())+1
-        if password != password2:
-            flash('Passwords do not match')
-            render_template('registration.html')
-        user = {
-            'uid': uid,
-            'username': username,
-            'password':password
-        }
-        UserList[email] = user
-        flash('Registration success')
-        return redirect(url_for('login'))
+            uid = len(USERLIST.items())+1
+        if check_password(password, password2):
+            user = User(uid, email, username, password)
+            USERLIST[username] = user
+            flash('Registration successful you can now login')
+            return redirect(url_for('login'))
+        else:
+            flash("The passwords do not match")
     return render_template('registration.html')
 
-@app.route('/login', methods=['GET', 'POST'])
+@FLASK_APP.route('/login', methods=['GET', 'POST'])
 def login():
     """
     User Login view
     """
-    error = None
     if request.method == 'POST':
-        email = request.form['email']
+        #get username and password from the request object
+        username = request.form['username']
         password = request.form['password']
-        if email not in UserList or password != UserList[email]['password']:
-            error = 'Invalid username or password. Please try again!'
+        if username in USERLIST:
+            user = USERLIST[username]
+            saved_password = user.password
+            #check that password provided is same as the stored password
+            if not check_password(saved_password, password):
+                flash('Incorrect password')
+            else:
+                flash("Login successful")
+                session['logged_in'] = True
+                CURRENT_USER['logged_user'] = user
+                return redirect(url_for('shopping_list'))
         else:
-            flash("You were successfully logged in")
-            session['logged_in'] = True
-            return redirect(url_for('shopping_list'))
-    return render_template('login.html', error=error)
+            flash('The username is not recognised')
+    return render_template('login.html')
 
-@app.route('/logout')
+@FLASK_APP.route('/logout')
 def logout():
     """
-    View to log user out of the app
+    View to log user out of the FLASK_APP
     """
     session.pop('logged_in', None)
     flash('You were logged out')
     return redirect(url_for('home'))
 
-@app.route('/shopping-list')
+@FLASK_APP.route('/shopping-list')
 def shopping_list():
     """
-    view for showing shooping lists
+    view for showing shopping lists
     """
-    users = UserList
-    return render_template('shoppinglist.html', user = users)
+    user = CURRENT_USER['logged_user'] or None
+    user_lists = user.shopping_lists
+    return render_template('shoppinglist.html', user_lists=user_lists)
+
+@FLASK_APP.route('/shopping-list/add', methods=['POST'])
+def add_shopping_list():
+    """
+    add shopping list
+    """
+    #get current user object
+    user = CURRENT_USER['logged_user']
+    if user:
+        #get users shopping lists
+        user_lists = user.shopping_lists
+        #
+        if user_lists == []:
+            uid = 1
+        else:
+            uid = len(user_lists)+1
+        name = str(request.form['shoplist'])
+        shoplist = ShoppingList(uid, name)
+        user.add_list(shoplist)
+        flash('List successfully added')
+        return redirect(url_for('shopping_list'))
+
+@FLASK_APP.route('/shopping-list/delete/<int:listid>')
+def delete_shopping_list(listid):
+    """
+    Delete shopping list
+    """
+    #get current user object
+    user = CURRENT_USER['logged_user']
+    if user:
+        #get users shopping list
+        shopping_lists = user.shopping_lists
+        for shoplist in shopping_lists:
+            #get shopping list with the specified id
+            if shoplist.listid == listid:
+                #delete shopping list
+                user.delete_list(shoplist)
+                flash('Shopping list deleted')
+                return redirect(url_for('shopping_list'))
+
+@FLASK_APP.route('/shopping-list/update/<int:listid>', methods=['GET', 'POST'])
+def update_shopping_list(listid):
+    """
+    Update shopping list
+    """
+    user = CURRENT_USER['logged_user']
+    shopping_lists = user.shopping_lists
+    if request.method == "POST":
+        for shoplist in shopping_lists:
+            if shoplist.listid == listid:
+                shoplist.update_list(request.form['listname'])
+                return redirect(url_for('shopping_list'))
+    else:
+        for shoplist in shopping_lists:
+            if shoplist.listid == listid:
+                name = shoplist.name #temporary workaround
+    return render_template('formedit.html', name=name)
+
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    FLASK_APP.run(debug=True)

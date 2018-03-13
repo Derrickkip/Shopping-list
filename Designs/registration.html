@@ -1,100 +1,39 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <title>Register</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <link href="static/css/bootstrap.min.css" rel="stylesheet">
-    <link href="static/css/mystyle.css" rel="stylesheet">
-    <script src="static/jQuery/jquery-3.2.1.min.js"></script>
-    <script src="static/js/bootstrap.min.js"></script>
-</head>
-
-<body>
-    <nav class="navbar navbar-default" role="navigation">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-1">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                <a class="navbar-brand" href="#"> Shopping list</a>
-            </div>
-            <div class="collapse navbar-collapse" id="navbar-collapse-1">
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="{{ url_for('home') }}">Home</a></li>
-                    <li><a href="{{ url_for('register') }}">Register</a></li>
-                    <li><a href="{{ url_for('login') }}">Login</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-    <div class="wrapper">
-        <h1 class="header">Sign Up</h1>
-        <hr class="divider" />
-        <div class="container topcontainer">
-            {% for message in get_flashed_messages() %}
-            <div class="alert alert-warning center">
-                <button type="button" class="close" data-dismiss="alert">&times</button> {{ message }}
-            </div>
-            {% endfor %}
-            <form class="form-horizontal" role="form" action="{{url_for('register') }}" method="POST">
-                <div class="form-group">
-                    <label class="control-label col-md-4" for="inputemail">Email:</label>
-                    <div class="input-group col-md-4">
-                        <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-                        <input class="form-control" type="email" id="inputemail" name="email" placeholder="Email" required>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-md-4" for="inputusername">Username:</label>
-                    <div class=" input-group col-md-4">
-                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                        <input class="form-control" type="text" id="inputusername" name="username" placeholder="Username" required>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-md-4" for="inputpassword">Password:</label>
-                    <div class="input-group col-md-4">
-                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                        <input class="form-control" type="password" id="inputpassword" name="password" placeholder="Password" required>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-md-4" for="confirmpassword">Confirm Password:</label>
-                    <div class="input-group col-md-4">
-                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                        <input class="form-control" type="password" id="confirmpassword" name="passwd" placeholder="Confirm Password" required>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-offset-4">
-                        <button class="btn btn-default" type="submit">Register</button>
-                    </div>
-                </div>
-            </form>
+{% extends 'base.html' %}{% block pagetitle %}Registration{% endblock %}{% block header %}Sign Up{% endblock %}{% block pagecontent %}
+<form class="form-horizontal" role="form" action="{{url_for('register') }}" method="POST">
+    <div class="form-group">
+        <label class="control-label col-md-4" for="inputemail">Email:</label>
+        <div class="input-group col-md-4">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+            <input class="form-control" type="email" id="inputemail" name="email" placeholder="Email" required>
         </div>
     </div>
-    <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <ul class="list-inline">
-                        <li><a href="{{ url_for('home') }}">Home</a></li>
-                        <li class="footer-menu-divider">⋅</li>
-                        <li><a href="{{ url_for('register') }}">Register</a></li>
-                        <li class="footer-menu-divider">⋅</li>
-                        <li><a href="{{ url_for('login') }}">Login</a></li>
-                    </ul>
-                    <p class="copyright text-muted small">Copyright © 2017. All Rights Reserved</p>
-                </div>
-            </div>
+    <div class="form-group">
+        <label class="control-label col-md-4" for="inputusername">Username:</label>
+        <div class=" input-group col-md-4">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+            <input class="form-control" type="text" id="inputusername" name="username" placeholder="Username" required>
         </div>
-    </footer>
-</body>
-
-</html>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-4" for="inputpassword">Password:</label>
+        <div class="input-group col-md-4">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+            <input class="form-control" type="password" id="inputpassword" name="password" placeholder="Password" required>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-4" for="confirmpassword">Confirm Password:</label>
+        <div class="input-group col-md-4">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+            <input class="form-control" type="password" id="confirmpassword" name="passwd" placeholder="Confirm Password" required>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-4">
+            <button class="btn btn-default" type="submit">Register</button>
+        </div>
+    </div>
+</form>
+</div>
+</div>
+{% endblock %}

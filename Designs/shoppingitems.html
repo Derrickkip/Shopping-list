@@ -1,0 +1,47 @@
+{% extends 'base.html' %}{% block pagetitle %}Shoppinglist items{% endblock %} {% block header %} {{ list_name }}{% endblock %} {% block pagecontent %}
+<div class="add-form">
+    <form class="form-inline" method="POST" role="form" action="{{url_for('add_shopping_list_items', listid=id) }}">
+
+        <input type="text" class="form-control col-md-offset-4" name="item">
+
+        <button type="submit" class="btn btn-default btn-md "><i class="glyphicon glyphicon-plus"></i>Add Items</button>
+    </form>
+</div>
+<div class="container topcontainer">
+    {% if items %}
+
+    <table class="table table-bordered table-striped table-hover">
+        <thead>
+            <tr>
+                <th width="2%"> </th>
+                <th width="25%">Name</th>
+                <th width="5%">Edit</th>
+                <th width="5%">Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+            <tr>
+                <td>{{ item.itemid }}</td>
+                <td>{{ item.name }}</td>
+                <td>
+                    <span><a href="{{url_for('edit_shopping_list_item', listid =id, itemid=item.itemid) }}" class="btn btn-default edit-btn">
+                        <i class="glyphicon glyphicon-pencil"></i>
+                    </a>
+                    </span>
+                </td>
+                <td>
+                    <span><a href="{{url_for('delete_shopping_list_item', listid=id, itemid=item.itemid) }}" class="btn btn-default delete-btn">
+                        <i class="glyphicon glyphicon-trash"></i>
+                    </a>
+                    </span>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <h3 class="center">This list has no items</h3>
+    {% endif %}
+</div>
+{% endblock %}

@@ -2,7 +2,7 @@
 Shopping list flask implementation
 """
 from flask import Flask, render_template, request, flash, redirect, url_for, session
-from classes import User, ShoppingList
+from classes import User, ShoppingList, Item
 
 SECRET_KEY = 'NaughtyNaughty'
 
@@ -82,7 +82,7 @@ def logout():
     """
     session.pop('logged_in', None)
     flash('You were logged out')
-    return redirect(url_for('home'))
+    return redirect(url_for('login'))
 
 @FLASK_APP.route('/shopping-list')
 def shopping_list():
@@ -148,8 +148,82 @@ def update_shopping_list(listid):
         for shoplist in shopping_lists:
             if shoplist.listid == listid:
                 name = shoplist.name #temporary workaround
-    return render_template('formedit.html', name=name)
+    return render_template('editlist.html', name=name)
 
+@FLASK_APP.route('/shopping-list/<int:listid>/items')
+def shopping_list_items(listid):
+    """
+    View shopping list items
+    """
+    user = CURRENT_USER['logged_user']
+    current_list = None
+    shop_list = user.shopping_lists
+    for shoplist in shop_list:
+        if shoplist.listid == listid:
+            current_list = shoplist
+    list_name = current_list.name
+    return render_template('shoppingitems.html', id=current_list.listid, items=current_list.items, list_name=list_name)
+
+@FLASK_APP.route('/shopping-list/<int:listid>/additems', methods=['POST'])
+def add_shopping_list_items(listid):
+    """
+    view to add shopping items to the shopping list
+    """
+    user = CURRENT_USER['logged_user']
+    user_list = user.shopping_lists
+    current_list = None
+    for lst in user_list:
+        if lst.listid == listid:
+            current_list = lst
+
+    if current_list.items == []:
+        uid = 1
+    else:
+        uid = len(current_list.items)+1
+
+    name = request.form['item']
+    new_item = Item(uid, name)
+    current_list.add_item(new_item)
+    return redirect(url_for('shopping_list_items', listid=listid))
+
+@FLASK_APP.route('/shopping-list/<int:listid>/<int:itemid>/edit', methods=['GET', 'POST'])
+def edit_shopping_list_item(listid, itemid):
+    """
+    View to edit item name
+    """
+    user = CURRENT_USER['logged_user']
+    user_list = user.shopping_lists
+    current_list = None
+    current_item = None
+    for lst in user_list:
+        if lst.listid == listid:
+            current_list = lst
+    for item in current_list.items:
+        if item.itemid == itemid:
+            current_item = item
+    if request.method == "POST":
+        current_item.update_item(request.form['listname'])
+        return redirect(url_for('shopping_list_items', listid=current_list.listid))
+    else:
+        return render_template('formedit.html', listid=current_list.listid, itmid=current_item.itemid, name=current_item.name)
+
+@FLASK_APP.route('/shopping-list/<int:listid>/<int:itemid>/delete')
+def delete_shopping_list_item(listid, itemid):
+    """
+    view to delete items from shopping list
+    """
+    user = CURRENT_USER['logged_user']
+    user_list = user.shopping_lists
+    current_list = None
+    current_item = None
+    for lst in user_list:
+        if lst.listid == listid:
+            current_list = lst
+    for item in current_list.items:
+        if item.itemid == itemid:
+            current_item = item
+    current_list.delete_item(current_item)
+    return redirect(url_for('shopping_list_items', listid=current_list.listid))
 
 
 if __name__ == '__main__':

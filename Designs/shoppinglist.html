@@ -1,122 +1,48 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base.html' %}{% block header %}Shopping list{% endblock %} {% block pagecontent %}
+<div class="add-form">
+    <form class="form-inline" method="POST" role="form" action="{{url_for('add_shopping_list') }}">
 
-<head>
-    <title>Shopping lists</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="static/css/bootstrap.min.css" rel="stylesheet">
-    <link href="static/css/mystyle.css" rel="stylesheet">
-    <script src="static/jQuery/jquery-3.2.1.min.js"></script>
-    <script src="static/js/bootstrap.min.js"></script>
-</head>
+        <input type="text" class="form-control col-md-offset-4" name="shoplist">
 
-<body>
-    <nav class="navbar navbar-default" role="navigation">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-1">
-                                    <span class="sr-only">Toggle navigation</span>
-                                    <span class="icon-bar"></span>
-                                    <span class="icon-bar"></span>
-                                    <span class="icon-bar"></span>
-                                </button>
-                <a class="navbar-brand" href="#"> Shopping list</a>
-            </div>
-            <div class="collapse navbar-collapse" id="navbar-collapse-1">
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="{{ url_for('home') }}">Home</a></li>
-                    {% if session.logged_in %}
-                    <li>
-                        <a href="{{ url_for('logout') }} ">Logout</a>
-                    </li>
-                    {% else %}
-                    <li><a href="{{ url_for('register') }}">Register</a></li>
-                    <li><a href="{{ url_for('login') }}">Login</a></li>
-                    {% endif %}
-                </ul>
-            </div>
-        </div>
-    </nav>
-    <div class="wrapper">
-        <h1 class="header">My Shopping Lists</h1>
-        <hr class="divider" />
-        <div class="container">
-            {% for message in get_flashed_messages() %}
-            <div class="alert alert-warning center">
-                <button type="button" class="close" data-dismiss="alert">&times</button> {{ message }}
-            </div>
-            {% endfor %}
-            <div class="add-form">
-                <form class="form-inline" method="POST" role="form" action="{{url_for('add_shopping_list') }}">
+        <button type="submit" class="btn btn-default btn-md "><i class="glyphicon glyphicon-plus"></i>Add Shopping list</button>
+    </form>
+</div>
 
-                    <input type="text" class="form-control col-md-offset-4" name="shoplist">
+<div class="container topcontainer">
+    {% if user_lists %}
 
-                    <button type="submit" class="btn btn-default btn-md "><i class="glyphicon glyphicon-plus"></i>Add Shopping list</button>
-                </form>
-            </div>
-        </div>
-
-        <div class="container topcontainer">
-            {% if user_lists %}
-
-            <table class="table table-bordered table-striped table-hover">
-                <thead>
-                    <tr>
-                        <th width="2%"> </th>
-                        <th width="25%">Name</th>
-                        <th width="5%">Edit</th>
-                        <th width="5%">Delete</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for item in user_lists %}
-                    <tr>
-                        <td>{{ item.listid }}</td>
-                        <td>{{ item.name }}</td>
-                        <td>
-                            <span><a href="{{url_for('update_shopping_list', listid=item.listid) }}" class="btn btn-default edit-btn">
+    <table class="table table-bordered table-striped table-hover">
+        <thead>
+            <tr>
+                <th width="2%"> </th>
+                <th width="25%">Name</th>
+                <th width="5%">Edit</th>
+                <th width="5%">Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for shoppinglist in user_lists %}
+            <tr>
+                <td>{{ shoppinglist.listid }}</td>
+                <td><a href="{{url_for('shopping_list_items', listid=shoppinglist.listid)}}">{{ shoppinglist.name }}</a></td>
+                <td>
+                    <span><a href="{{url_for('update_shopping_list', listid=shoppinglist.listid) }}" class="btn btn-default edit-btn">
                             <i class="glyphicon glyphicon-pencil"></i>
                         </a>
                         </span>
-                        </td>
-                        <td>
-                            <span><a href="{{url_for('delete_shopping_list', listid=item.listid) }}" class="btn btn-default delete-btn">
+                </td>
+                <td>
+                    <span><a href="{{url_for('delete_shopping_list', listid=shoppinglist.listid) }}" class="btn btn-default delete-btn">
                             <i class="glyphicon glyphicon-trash"></i>
                         </a>
                         </span>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-            {% else %}
-            <h3 class="center">You have not created any lists yet!!</h3>
-            {% endif %}
-        </div>
-    </div>
-    <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <ul class="list-inline">
-                        <li><a href="{{ url_for('home') }}">Home</a></li>
-                        <li class="footer-menu-divider">⋅</li>
-                        {% if session.logged_in %}
-                        <li>
-                            <a href="{{ url_for('logout') }}">Logout</a>
-                        </li>
-                        {% else %}
-                        <li><a href="#">Register</a></li>
-                        <li class="footer-menu-divider">⋅</li>
-                        <li><a href="#">Login</a></li>
-                        {% endif %}
-                    </ul>
-                    <p class="copyright text-muted small">Copyright © 2017. All Rights Reserved</p>
-                </div>
-            </div>
-        </div>
-    </footer>
-</body>
-
-</html>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <h3 class="center">You have not created any lists yet!!</h3>
+    {% endif %}
+</div>
+{% endblock %}

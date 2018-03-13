@@ -24,6 +24,9 @@ class User(object):
         Delete user list
         """
         self.shopping_lists.remove(shopping_list)
+        for shop_list in self.shopping_lists:
+            if shop_list.listid > shopping_list.listid:
+                shop_list.listid -= 1
 
     def __repr__(self):
         return ("<Email: %s> <Username: %s>")%(self.email, self.username)
@@ -55,6 +58,9 @@ class ShoppingList(object):
         remove items from list
         """
         self.items.remove(item)
+        for lstitem in self.items:
+            if lstitem.itemid > item.itemid:
+                lstitem.itemid -= 1
 
 class Item(object):
     """

@@ -1,0 +1,19 @@
+{% extends "base.html" %}{% block heading %}{% if edit %}Edit Shopping List{% else %}Add Shopping List{% endif %}{% endblock %} {% block pagecontent %}
+<form class="form-horizontal" method="POST" {% if edit %} action="{{url_for('update_shoppinglist', listid=shoplist.listid)}}" {% else %} action="{{url_for('add_shopping_list')}}" {% endif %}>
+    <div class="form-group">
+        <label for="ListName" class="control-label col-xs-2 col-md-3">Name</label>
+        <div class="col-xs-10 col-md-6">
+            <input type="text" class="form-control" id="ListName" placeholder="ListName" name="listname" {% if edit %}value='{{shoplist.name}}' {% endif %} required>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="listitems" class="control-label col-xs-2 col-md-3">Items</label>
+        <div class="col-xs-10 col-md-6">
+            <textarea class="form-control" rows="10" id="listitems" placeholder="items" name="listitems">{% if edit %}{% for item in items %}{{item}}{% endfor %}{% endif %}</textarea>
+        </div>
+    </div>
+    <div class=" form-group center ">
+        <button type="submit " class="btn btn-lg btn-default "><i class="glyphicon glyphicon-plus "></i>{% if edit %}Done{% else %}Add list{% endif %}</button>
+    </div>
+</form>
+{% endblock %}

@@ -35,23 +35,30 @@ class ShoppingList(object):
     """
     Shopping list object class declaration
     """
-    def __init__(self, listid, name):
+    def __init__(self, listid, name, datecreated):
         #unique ID for every shopping list
         self.listid = listid
         self.name = name
+        self.datecreated = datecreated
         self.items = []
 
-    def update_list(self, name2):
+    def update_list(self, update_name):
         """
         Update the shopping list
         """
-        self.name = name2
+        self.name = update_name
 
     def add_item(self, item):
         """
         Add items to shopping list
         """
         self.items.append(item)
+
+    def count_items(self):
+        """
+        Method to count number of items
+        """
+        return len(self.items)
 
     def delete_item(self, item):
         """
@@ -70,8 +77,8 @@ class Item(object):
         self.itemid = itemid
         self.name = name
 
-    def update_item(self, name2):
+    def update_item(self, update_name):
         """
         Update item
         """
-        self.name = name2
+        self.name = update_name

@@ -1,37 +1,35 @@
-{% extends 'base.html' %}{% block pagetitle %}Registration{% endblock %}{% block header %}Sign Up{% endblock %}{% block pagecontent %}
-<form class="form-horizontal" role="form" action="{{url_for('register') }}" method="POST">
+{% extends 'base.html' %}{% block pagetitle %}Registration{% endblock %}{% block heading %}Sign Up{% endblock %}{% block pagecontent %}
+<form class="form-horizontal" role="form" method="POST" action="{{ url_for( 'register')}}">
     <div class="form-group">
-        <label class="control-label col-md-4" for="inputemail">Email:</label>
-        <div class="input-group col-md-4">
+        <label class="control-label col-xs-2 col-md-3" for="inputemail">Email:</label>
+        <div class="input-group col-xs-10 col-md-6">
             <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
             <input class="form-control" type="email" id="inputemail" name="email" placeholder="Email" required>
         </div>
     </div>
     <div class="form-group">
-        <label class="control-label col-md-4" for="inputusername">Username:</label>
-        <div class=" input-group col-md-4">
+        <label class="control-label col-xs-2 col-md-3" for="inputusername">Username:</label>
+        <div class=" input-group col-xs-10 col-md-6">
             <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
             <input class="form-control" type="text" id="inputusername" name="username" placeholder="Username" required>
         </div>
     </div>
     <div class="form-group">
-        <label class="control-label col-md-4" for="inputpassword">Password:</label>
-        <div class="input-group col-md-4">
+        <label class="control-label col-xs-2 col-md-3" for="inputpassword">Password:</label>
+        <div class="input-group col-xs-10 col-md-6">
             <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
             <input class="form-control" type="password" id="inputpassword" name="password" placeholder="Password" required>
         </div>
     </div>
     <div class="form-group">
-        <label class="control-label col-md-4" for="confirmpassword">Confirm Password:</label>
-        <div class="input-group col-md-4">
+        <label class="control-label col-xs-2 col-md-3" for="confirmpassword">Confirm Password:</label>
+        <div class="input-group col-xs-10 col-md-6">
             <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-            <input class="form-control" type="password" id="confirmpassword" name="passwd" placeholder="Confirm Password" required>
+            <input class="form-control" type="password" id="confirmpassword" name="password2" placeholder="Confirm Password" required>
         </div>
     </div>
-    <div class="form-group">
-        <div class="col-md-offset-4">
-            <button class="btn btn-default" type="submit">Register</button>
-        </div>
+    <div class="form-group center">
+        <button class="btn btn-default btn-lg" type="submit">Register</button>
     </div>
 </form>
 </div>
